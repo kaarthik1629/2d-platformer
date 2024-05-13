@@ -18,7 +18,7 @@ public class playercontroller : MonoBehaviour
     public Vector3 camoff;
     float dirx;
     public LayerMask  Enemylayer, groundLayer, Enemylayer2;
-    public Slider slider;
+    private Slider slider;
     
     public float colliderRadius = 0.5f, gcheckvalue = 0.1f;
     public Color gizmoscolor = Color.white;
@@ -26,9 +26,10 @@ public class playercontroller : MonoBehaviour
     public Transform[] attackpoint;
     public Transform pointradius;
     public int maxhealth = 100;
+    public int enemymaxhealth = 100;    
     public int attackhealth = 20;
     public static playercontroller instance;
-    
+  
 
     public enum movement
     {
@@ -75,14 +76,7 @@ public class playercontroller : MonoBehaviour
 
 
     }
-    public void health (int damage)
-    {
-       
-        maxhealth -=damage;
-        slider.value = maxhealth;
-        
-        
-    }
+    
     public void movements()
     {
       
@@ -125,6 +119,14 @@ public class playercontroller : MonoBehaviour
         ani.SetInteger("move", (int)state);
 
     }
+    public void health(int damage)
+    {
+
+        maxhealth -= damage;
+        slider.value = maxhealth;
+
+
+    }
 
 
     public void FixedUpdate()
@@ -156,7 +158,11 @@ public class playercontroller : MonoBehaviour
             
             if (EnemyMotion.instance != null)
             {
-                EnemyMotion.instance.Enemyattack(25);
+                print(collider.gameObject.name);
+                slider = collider.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Slider>();
+                enemymaxhealth -= 25;
+                //EnemyMotion.instance.Enemyattack(25);
+                slider.value = enemymaxhealth;   
             }
             
 
@@ -170,6 +176,10 @@ public class playercontroller : MonoBehaviour
         return Physics2D.BoxCast(Collider2D.bounds.center, Collider2D.bounds.size,0, Vector2.down,0.1f, groundLayer);
 
        
+    }
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 
 

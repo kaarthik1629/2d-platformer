@@ -26,7 +26,7 @@ public class moving : MonoBehaviour
     private void Update()
 
     {
-        print("Counter Value = "+ counter);
+        print("Counter Value = "+ counter);             
         if(Vector3.Distance(transform.position, points[counter].position) < 0.1f)
         {
             print("First If");
@@ -59,6 +59,11 @@ public class moving : MonoBehaviour
     private void print(Vector3 position1, Vector3 position2)
     {
         throw new NotImplementedException();
+    }
+    public void SetMovePoints(Transform[] movepoints)
+    {
+        points = movepoints;
+        counter = 0; // Reset the current move point index
     }
 }
 
